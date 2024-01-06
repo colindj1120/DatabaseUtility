@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+}
+
+group = 'io.colindj1120'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    //Apache Derby Database
+    def derbyVersion = "10.17.1.0"
+    implementation "org.apache.derby:derby:${derbyVersion}"
+    implementation "org.apache.derby:derbynet:${derbyVersion}"
+    implementation "org.apache.derby:derbyclient:${derbyVersion}"
+    implementation "org.apache.derby:derbyshared:${derbyVersion}"
+
+
+    // Hikari Datasource config
+    implementation 'com.zaxxer:HikariCP:5.0.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'your.package.YourMainClass' // Replace with your actual main class
+        )
+    }
+}
