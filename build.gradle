@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'io.github.colindj1120'
-version = '0.1.1'
+version = '0.1.2'
 
 java {
     sourceCompatibility = '21'
@@ -42,7 +42,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = 'io.github.colindj1120'
             artifactId = 'database-utility'
-            version = '0.1.1'
+            version = '0.1.2'
 
             from components.java
             artifact tasks.javadocJar
