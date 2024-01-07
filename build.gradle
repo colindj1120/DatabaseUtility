@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'io.github.colindj1120'
-version = '0.1.0'
+version = '0.1.1'
 
 java {
     sourceCompatibility = '21'
@@ -42,7 +42,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = 'io.github.colindj1120'
             artifactId = 'database-utility'
-            version = '0.1.0'
+            version = '0.1.1'
 
             from components.java
             artifact tasks.javadocJar
@@ -83,10 +83,9 @@ publishing {
     }
     repositories {
         maven {
-            def releasesRepoUrl = layout.buildDirectory.dir('https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/')
-            def snapshotsRepoUrl = layout.buildDirectory.dir('https://s01.oss.sonatype.org/content/repositories/snapshots/')
+            def releasesRepoUrl = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+            def snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
             url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-            url = uri("")
             credentials {
                 username = System.getenv('MAVEN_CENTRAL_USERNAME')
                 password = System.getenv('MAVEN_CENTRAL_PASSWORD')
