@@ -1,12 +1,102 @@
 plugins {
     id 'java'
+    id 'signing'
+    id 'maven-publish'
 }
 
-group = 'io.colindj1120'
-version = '1.0-SNAPSHOT'
+group = 'io.github.colindj1120'
+version = '0.1.0'
+
+java {
+    sourceCompatibility = '21'
+    targetCompatibility = '21'
+}
+
+javadoc {
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.windowTitle = "Database Utility API"
+    options.docTitle = "Database Utility API"
+    options.header = "Database Utility API"
+}
 
 repositories {
     mavenCentral()
+}
+
+tasks.register('javadocJar', Jar) {
+    archiveClassifier.set('javadoc')
+    from javadoc
+}
+
+tasks.register('sourcesJar', Jar) {
+    archiveClassifier.set('sources')
+    from sourceSets.main.allJava
+}
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'io.github.colindj1120'
+            artifactId = 'database-utility'
+            version = '0.1.0'
+
+            from components.java
+            artifact tasks.javadocJar
+            artifact tasks.sourcesJar
+
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = 'Database Utility'
+                description = 'A utility project to allow for easy to use database operation calls'
+                url = 'http://github.com/colindj1120/DatabaseUtility'
+                licenses {
+                    license {
+                        name = 'GNU General Public License v3.0'
+                        url = 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'colindj1120'
+                        name = 'Colin Jokisch'
+                        email = 'colindj1120@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/colindj1120/DatabaseUtility.git'
+                    developerConnection = 'scm:git:git://github.com/colindj1120/DatabaseUtility.git'
+                    url = 'http://github.com/colindj1120/DatabaseUtility'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            def releasesRepoUrl = layout.buildDirectory.dir('https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/')
+            def snapshotsRepoUrl = layout.buildDirectory.dir('https://s01.oss.sonatype.org/content/repositories/snapshots/')
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            url = uri("")
+            credentials {
+                username = System.getenv('MAVEN_CENTRAL_USERNAME')
+                password = System.getenv('MAVEN_CENTRAL_PASSWORD')
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
 }
 
 dependencies {
@@ -32,7 +122,10 @@ test {
 jar {
     manifest {
         attributes(
-                'Main-Class': 'your.package.YourMainClass' // Replace with your actual main class
+                'Implementation-Title': 'Database Utility',
+                'Implementation-Version': '0.1.0',
+                'Main-Class': 'io.github.colindj1120.Main',
+                'Automatic-Module-Name': 'DatabaseUtility'
         )
     }
 }

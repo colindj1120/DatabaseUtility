@@ -1,0 +1,12 @@
+DataSourceConfig -
+Connection Pool Monitoring
+Connection Pool Management
+Custom Exceptions i.e. DataSourceConfigurationException
+
+Make separate from database then pass in?
+
+
+Project -
+Add Logging
+internationalize
+

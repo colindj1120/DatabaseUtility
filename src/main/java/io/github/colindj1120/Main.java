@@ -1,4 +1,4 @@
-package io.colindj1120;
+package io.github.colindj1120;
 
 public class Main {
     public static void main(String[] args) {
