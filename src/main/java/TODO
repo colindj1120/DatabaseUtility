@@ -10,3 +10,5 @@ Project -
 Add Logging
 internationalize
 
+remove the derby dependency this would be handled in the using project
+
